@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ByteBlaze | Student Innovation Project</title>
+  <meta name="description" content="A modern, interactive platform demonstrating how digital tools transform learning into a personalized, tech-enabled experience across effectiveness, efficiency, flexibility, and comfort." />
+
+  <!-- Tailwind CSS CDN with configuration -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- External Libraries: Chart.js & Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom CSS Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased selection:bg-primary-500 selection:text-white transition-colors duration-300">
+
+  <!-- ========================================================================= -->
+  <!-- NAVIGATION BAR                                                            -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-50 glass-nav border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-primary-600 via-indigo-600 to-cyan-500 p-0.5 shadow-md group-hover:shadow-primary-500/25 transition-all">
+          <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[14px] flex items-center justify-center">
+            <span class="text-xl">⚡</span>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-slate-900 via-primary-700 to-indigo-600 dark:from-white dark:via-primary-300 dark:to-cyan-400 bg-clip-text text-transparent">
+              ByteBlaze
+            </span>
+            <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-primary-100 text-primary-800 dark:bg-primary-950 dark:text-primary-300 border border-primary-300 dark:border-primary-800">
+              Student Innovation
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium -mt-0.5">Digital Learning in the Modern Age</p>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-600 dark:text-slate-300">
+        <a href="#pillars" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">4 Pillars</a>
+        <a href="#quiz" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Adaptive Quiz</a>
+        <a href="#planner" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Study Planner</a>
+        <a href="#analytics" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Analytics</a>
+        <a href="#flashcards" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Flashcards</a>
+        <a href="#community" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Community</a>
+        <a href="#technology" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Tech Behind It</a>
+        <a href="#comparison" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Impact</a>
+      </nav>
+
+      <!-- Action Items: Theme Toggle & Launch Demo -->
+      <div class="flex items-center gap-3">
+        <!-- Dark/Light Theme Button -->
+        <button 
+          onclick="toggleTheme()" 
+          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-slate-700 dark:text-slate-300" 
+          aria-label="Toggle Light and Dark Mode"
+          title="Toggle Light/Dark Mode"
+        >
+          <span class="theme-toggle-icon flex items-center justify-center"></span>
+        </button>
+
+        <!-- CTA Button -->
+        <a 
+          href="#quiz" 
+          class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-700 hover:to-indigo-700 text-white font-semibold text-sm shadow-md hover:shadow-primary-500/25 transition-all"
+        >
+          <span>Try Interactive Demo</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+
+        <!-- Mobile Menu Hamburger Button -->
+        <button 
+          id="mobile-menu-btn" 
+          class="lg:hidden p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          aria-label="Open mobile menu"
+        >
+          <svg class="w-6 h-6 text-slate-700 dark:text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-nav-drawer" class="hidden lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg px-6 py-5 transition-all">
+      <div class="flex flex-col gap-3 font-semibold text-sm">
+        <a href="#pillars" class="py-2 text-slate-700 dark:text-slate-200">The 4 Pillars</a>
+        <a href="#quiz" class="py-2 text-slate-700 dark:text-slate-200">Adaptive Quiz Module</a>
+        <a href="#planner" class="py-2 text-slate-700 dark:text-slate-200">AI Study Planner</a>
+        <a href="#analytics" class="py-2 text-slate-700 dark:text-slate-200">Learning Analytics</a>
+        <a href="#flashcards" class="py-2 text-slate-700 dark:text-slate-200">Spaced Flashcards</a>
+        <a href="#community" class="py-2 text-slate-700 dark:text-slate-200">Discussion Board</a>
+        <a href="#technology" class="py-2 text-slate-700 dark:text-slate-200">Technology Engine</a>
+        <a href="#comparison" class="py-2 text-slate-700 dark:text-slate-200">Traditional vs. Smart</a>
+        <a href="#quiz" class="mt-2 text-center py-2.5 bg-primary-600 text-white rounded-xl">Launch Live Demo</a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ========================================================================= -->
+  <!-- 1. HERO SECTION                                                           -->
+  <!-- ========================================================================= -->
+  <section class="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-32">
+    <!-- Subtle Background Glow Orbs -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-primary-500/15 to-cyan-500/15 blur-3xl -z-10 pointer-events-none rounded-full"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Hero Text & Value Proposition -->
+        <div class="lg:col-span-7 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-primary-50 dark:bg-primary-950/80 text-primary-700 dark:text-primary-300 border border-primary-200 dark:border-primary-800 mb-6">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Student Innovation Project Demo
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15] mb-6">
+            Learn <span class="bg-gradient-to-r from-primary-600 via-indigo-500 to-cyan-500 bg-clip-text text-transparent">Smarter</span>, Not Harder.
+          </h1>
+
+          <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed mb-8">
+            Smart Education harnesses artificial intelligence, learning psychometrics, and flexible cloud architecture to help students study more <strong>effectively</strong>, <strong>efficiently</strong>, <strong>flexibly</strong>, and <strong>comfortably</strong> in the digital age.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+            <a 
+              href="#quiz" 
+              class="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-700 hover:to-indigo-700 text-white font-bold text-base shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 transition-all flex items-center gap-2 group"
+            >
+              <span>Launch Adaptive Quiz</span>
+              <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </a>
+            
+            <a 
+              href="#planner" 
+              class="px-7 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-400 dark:hover:border-primary-600 text-slate-800 dark:text-slate-200 font-bold text-base shadow-sm hover:shadow-md transition-all flex items-center gap-2"
+            >
+              <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span>Build Study Schedule</span>
+            </a>
+          </div>
+
+          <!-- Proof Metrics -->
+          <div class="mt-10 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-3 gap-4 text-center lg:text-left">
+            <div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">38%</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Faster Concept Mastery</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">92%</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Retention with Spacing</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">0</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Cramming Anxiety</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Animated Digital Ecosystem Visual -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative mx-auto max-w-md p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-2xl animate-float">
+            
+            <!-- Simulated Telemetry Header -->
+            <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-100 dark:border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
+                <span class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Live Learning Telemetry</span>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                AI Synced
+              </span>
+            </div>
+
+            <!-- Dynamic Gauge Card -->
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-primary-50 to-indigo-50 dark:from-primary-950/40 dark:to-indigo-950/30 border border-primary-100 dark:border-primary-900/60 mb-4">
+              <div class="flex items-center justify-between text-xs font-bold text-primary-700 dark:text-primary-300 mb-2">
+                <span>Cognitive Flow State</span>
+                <span>Optimal (Zone of Proximal Development)</span>
+              </div>
+              <div class="w-full bg-white dark:bg-slate-800 h-3 rounded-full overflow-hidden p-0.5 border border-primary-200 dark:border-primary-800">
+                <div class="bg-gradient-to-r from-primary-500 to-cyan-400 h-full rounded-full transition-all duration-700" style="width: 78%;"></div>
+              </div>
+              <div class="flex justify-between text-[10px] text-slate-500 dark:text-slate-400 mt-1.5 font-mono">
+                <span>Boredom (Too Easy)</span>
+                <span class="font-bold text-primary-600 dark:text-primary-400">Target: 78%</span>
+                <span>Anxiety (Too Hard)</span>
+              </div>
+            </div>
+
+            <!-- Live Status Badges Grid -->
+            <div class="grid grid-cols-2 gap-3 mb-4">
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/70">
+                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Adaptive Streak</div>
+                <div class="text-xl font-extrabold text-slate-900 dark:text-white mt-0.5 flex items-center gap-1.5">
+                  <span>7 Days</span>
+                  <span class="text-amber-500 text-lg">🔥</span>
+                </div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/70">
+                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Next Review Wave</div>
+                <div class="text-xl font-extrabold text-slate-900 dark:text-white mt-0.5 flex items-center gap-1.5">
+                  <span>In 4 Hours</span>
+                  <span class="text-primary-500 text-base">⏳</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Micro-Prompt -->
+            <div class="p-3.5 rounded-xl bg-indigo-50/70 dark:bg-slate-800/90 border border-indigo-100 dark:border-indigo-950 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
+                  AI
+                </div>
+                <span class="text-slate-700 dark:text-slate-300 font-medium">Ready for your 5-min adaptive check?</span>
+              </div>
+              <a href="#quiz" class="px-3 py-1.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-semibold text-xs transition-colors">
+                Start ➜
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 2. ABOUT SMART EDUCATION: THE 4 PILLARS                                   -->
+  <!-- ========================================================================= -->
+  <section id="pillars" class="py-20 bg-white dark:bg-slate-900/50 border-y border-slate-200/80 dark:border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/80 px-3 py-1 rounded-full border border-primary-200 dark:border-primary-900">
+          Core Foundations
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 tracking-tight">
+          The Four Pillars of Smart Education
+        </h2>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mt-3">
+          How technology restructures the learning journey to ensure every student achieves their fullest potential without traditional educational friction.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Pillar 1: Effectiveness -->
+        <div class="group p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-white flex items-center justify-center text-2xl shadow-md mb-5 group-hover:scale-110 transition-transform">
+              🎯
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Pillar I</span>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mt-1 mb-3">Effectiveness</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Targeted comprehension via AI diagnostic engines. Instead of rote memorization, learners receive immediate remedial feedback to prevent misconception consolidation.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 text-xs font-semibold text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span>Mastery-based Progression</span>
+          </div>
+        </div>
+
+        <!-- Pillar 2: Efficiency -->
+        <div class="group p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-primary-600 to-indigo-500 text-white flex items-center justify-center text-2xl shadow-md mb-5 group-hover:scale-110 transition-transform">
+              ⚡
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">Pillar II</span>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mt-1 mb-3">Efficiency</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Optimizing study time through Ebbinghaus spaced repetition algorithms. Students spend time reviewing only items on the verge of memory decay, saving hundreds of hours.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 text-xs font-semibold text-primary-700 dark:text-primary-300 flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>40% Reduction in Study Time</span>
+          </div>
+        </div>
+
+        <!-- Pillar 3: Flexibility -->
+        <div class="group p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-500 text-white flex items-center justify-center text-2xl shadow-md mb-5 group-hover:scale-110 transition-transform">
+              🌐
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">Pillar III</span>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mt-1 mb-3">Flexibility</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Universal asynchronous access across devices. Break monolithic 3-hour lectures into bite-sized micro-modules that fit into commuting, part-time work, or irregular schedules.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 text-xs font-semibold text-cyan-700 dark:text-cyan-300 flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            <span>24/7 Asynchronous Micro-learning</span>
+          </div>
+        </div>
+
+        <!-- Pillar 4: Comfort -->
+        <div class="group p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-400 text-white flex items-center justify-center text-2xl shadow-md mb-5 group-hover:scale-110 transition-transform">
+              ☕
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Pillar IV</span>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mt-1 mb-3">Comfort</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Ergonomic cognitive pacing designed to prevent student burnout. Integrates built-in Pomodoro rests, gentle "no-guilt" schedule adjustments, and accessible dark themes.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 text-xs font-semibold text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            <span>Low Cognitive Fatigue Design</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 3. INTERACTIVE FEATURE DEMO A: ADAPTIVE QUIZ ENGINE                        -->
+  <!-- ========================================================================= -->
+  <section id="quiz" class="py-20 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/80 px-3 py-1 rounded-full border border-primary-200 dark:border-primary-900">
+          Interactive Demo 1
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 tracking-tight">
+          Adaptive Quiz Engine
+        </h2>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mt-2">
+          Experience real-time difficulty calibration. Answer correctly to unlock harder challenges; answer incorrectly to trigger supportive remedial pacing.
+        </p>
+      </div>
+
+      <!-- Quiz Interactive Card Container -->
+      <div class="max-w-3xl mx-auto bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xl overflow-hidden">
+        
+        <!-- Live Difficulty & Metacognitive Header -->
+        <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200/80 dark:border-slate-800">
+          <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+            <div class="flex items-center gap-2">
+              <span id="quiz-difficulty-badge" class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border border-blue-300 dark:border-blue-800">
+                Loading...
+              </span>
+              <span id="quiz-step-indicator" class="text-xs font-bold text-slate-500 dark:text-slate-400">
+                Question 1 of 6
+              </span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                Ability Rating: <strong id="quiz-ability-score" class="text-primary-600 dark:text-primary-400 font-extrabold">50%</strong>
+              </div>
+              <button 
+                onclick="window.adaptiveQuiz.restart()" 
+                class="text-xs font-semibold text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-1"
+                title="Reset Quiz"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span>Reset</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cognitive Load Meter Bar -->
+          <div>
+            <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+              <div id="quiz-difficulty-bar" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 50%;"></div>
+            </div>
+            <p id="quiz-difficulty-desc" class="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 italic font-medium">
+              Calibrating question complexity to your cognitive baseline...
+            </p>
+          </div>
+        </div>
+
+        <!-- Dynamic Question & Options Render Area -->
+        <div class="p-6 sm:p-8" id="quiz-card-content">
+          <!-- Content dynamically injected by quiz-engine.js -->
+        </div>
+
+        <!-- How Adaptive Logic Works (Pedagogical Explanation) -->
+        <div class="px-6 py-4 bg-slate-50/70 dark:bg-slate-900/80 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between">
+          <span class="flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <strong>Algorithm:</strong> 2 correct answers escalate difficulty; 1 wrong answer de-escalates with instant hints.
+          </span>
+          <span class="hidden sm:inline font-mono text-[10px]">Item Response Theory (IRT)</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 3. INTERACTIVE FEATURE DEMO B: AI-POWERED STUDY PLANNER                    -->
+  <!-- ========================================================================= -->
+  <section id="planner" class="py-20 bg-slate-100/60 dark:bg-slate-900/40 border-y border-slate-200/80 dark:border-slate-800/80 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/80 px-3 py-1 rounded-full border border-primary-200 dark:border-primary-900">
+          Interactive Demo 2
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 tracking-tight">
+          Adaptive Study Planner & Scheduler
+        </h2>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mt-2">
+          Tailors daily study blocks around student availability. Rebalances tasks dynamically when schedules change—eliminating study guilt.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Planner Configuration Controls -->
+        <div class="lg:col-span-5 bg-white dark:bg-slate-900 p-6 sm:p-7 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-lg flex flex-col justify-between">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+              <span>🗓️</span> Plan Configuration
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">
+              Adjust your constraints to generate a personalized, balanced schedule.
+            </p>
+
+            <form id="planner-config-form" class="space-y-4">
+              <div>
+                <label for="planner-subject-select" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+                  Target Field / Subject
+                </label>
+                <select id="planner-subject-select" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:border-primary-500">
+                  <option value="algorithms">Data Structures & Algorithms</option>
+                  <option value="fullstack">Full-Stack Web Engineering</option>
+                  <option value="ai_ml">AI & Machine Learning Systems</option>
+                </select>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label for="planner-hours-input" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+                    Hours / Day
+                  </label>
+                  <input type="number" id="planner-hours-input" min="1" max="6" step="0.5" value="2.5" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:border-primary-500" />
+                </div>
+                <div>
+                  <label for="planner-days-select" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+                    Plan Duration
+                  </label>
+                  <select id="planner-days-select" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:border-primary-500">
+                    <option value="5">5-Day Sprint</option>
+                    <option value="7">7-Day Intensive</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label for="planner-rhythm-select" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+                  Cognitive Rhythm
+                </label>
+                <select id="planner-rhythm-select" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:border-primary-500">
+                  <option value="pomodoro">Pomodoro (25 min focus / 5 min break)</option>
+                  <option value="deep">Deep Work (50 min focus / 10 min break)</option>
+                </select>
+              </div>
+
+              <button 
+                type="submit" 
+                class="w-full mt-2 py-3 px-4 rounded-xl bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-700 hover:to-indigo-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
+              >
+                <span>⚡ Generate Smart Plan</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Dynamic Rebalancer Trigger -->
+          <div class="mt-6 pt-5 border-t border-slate-200 dark:border-slate-800">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-700 dark:text-slate-300">Missed a study block?</span>
+              <button 
+                onclick="window.smartPlanner.rebalanceSchedule()" 
+                class="text-xs font-bold text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span>Auto-Rebalance Without Guilt</span>
+              </button>
+            </div>
+            <div id="rebalance-feedback-banner" class="hidden p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-200">
+              ✨ Schedule rebalanced! Tasks redistributed gently across remaining open slots.
+            </div>
+          </div>
+        </div>
+
+        <!-- Schedule Tasks View -->
+        <div class="lg:col-span-7 flex flex-col justify-between">
+          <!-- Planner Summary Bar -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm mb-4 flex items-center justify-between gap-4">
+            <div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Completion Progress</div>
+              <div class="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                <span id="planner-completion-percent">0%</span>
+                <span id="planner-tasks-count" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">0/0 Done</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Total Allocated</div>
+              <div id="planner-total-hours" class="text-xl font-extrabold text-primary-600 dark:text-primary-400">0 hrs</div>
+            </div>
+          </div>
+
+          <!-- Dynamic Progress Bar -->
+          <div class="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden mb-4">
+            <div id="planner-completion-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+          </div>
+
+          <!-- Schedule Item Cards List -->
+          <div id="planner-schedule-items" class="space-y-3 flex-grow">
+            <!-- Populated dynamically by planner-engine.js -->
+          </div>
+
+          <div class="mt-4 flex justify-end">
+            <button 
+              onclick="window.smartPlanner.resetToDefaults()" 
+              class="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors"
+            >
+              Reset to default demo plan
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 3. INTERACTIVE FEATURE DEMO C: LEARNING ANALYTICS DASHBOARD                -->
+  <!-- ========================================================================= -->
+  <section id="analytics" class="py-20 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-widest text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/80 px-3 py-1 rounded-full border border-primary-200 dark:border-primary-900">
+            Interactive Demo 3
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 tracking-tight">
+            Learning Analytics Dashboard
+          </h2>
+          <p class="text-base text-slate-600 dark:text-slate-400 mt-2">
+            Visual telemetry powered by Chart.js. Track retention velocity, study adherence, and topic mastery.
+          </p>
+        </div>
+
+        <!-- Simulation Actions -->
+        <div class="flex items-center gap-3">
+          <button 
+            onclick="window.analyticsManager.simulateStudySession()" 
+            class="px-4 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-semibold text-xs shadow transition-all flex items-center gap-1.5"
+            title="Add a 1-hour study block and update charts in real-time"
+          >
+            <span>+ Simulate 1hr Session</span>
+          </button>
+          <button 
+            onclick="window.analyticsManager.resetData()" 
+            class="px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            title="Reset metrics"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Top KPI Summary Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+        
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-semibold">
+            <span>Study Streak</span>
+            <span class="text-base">🔥</span>
+          </div>
+          <div id="kpi-streak" class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-2">7 Days</div>
+          <p class="text-[11px] text-emerald-600 dark:text-emerald-400 mt-1 font-medium">Top 5% consistency</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-semibold">
+            <span>Time Invested</span>
+            <span class="text-base">⏱️</span>
+          </div>
+          <div id="kpi-hours" class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-2">28.5 hrs</div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 font-medium">Avg 4.1 hrs/day</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-semibold">
+            <span>Efficiency Boost</span>
+            <span class="text-base">🚀</span>
+          </div>
+          <div id="kpi-efficiency" class="text-2xl sm:text-3xl font-extrabold text-primary-600 dark:text-primary-400 mt-2">+38%</div>
+          <p class="text-[11px] text-primary-600 dark:text-primary-400 mt-1 font-medium">Vs standard cramming</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-semibold">
+            <span>Mastery Index</span>
+            <span class="text-base">⭐</span>
+          </div>
+          <div id="kpi-mastery" class="text-2xl sm:text-3xl font-extrabold text-purple-600 dark:text-purple-400 mt-2">86%</div>
+          <p class="text-[11px] text-purple-600 dark:text-purple-400 mt-1 font-medium">Ready for assessments</p>
+        </div>
+
+      </div>
+
+      <!-- Visual Charts Grid (Chart.js) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Chart 1: Weekly Hours vs Target -->
+        <div class="lg:col-span-7 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h4 class="font-bold text-base text-slate-900 dark:text-white">Weekly Focus: Actual vs. Adaptive Target</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Hours spent learning daily compared to optimized goal</p>
+            </div>
+            <span class="text-xs font-bold text-slate-400">Bar Chart</span>
+          </div>
+          <div class="h-64 sm:h-72 relative">
+            <canvas id="analytics-weekly-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Competency Radar -->
+        <div class="lg:col-span-5 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h4 class="font-bold text-base text-slate-900 dark:text-white">Topic Mastery Balance</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Multi-dimensional competency assessment</p>
+            </div>
+            <span class="text-xs font-bold text-slate-400">Radar</span>
+          </div>
+          <div class="h-64 sm:h-72 relative">
+            <canvas id="analytics-radar-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 3: Retention Curve Across 6 Weeks -->
+        <div class="lg:col-span-12 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h4 class="font-bold text-base text-slate-900 dark:text-white">6-Week Retention Trajectory (Spaced Repetition Impact)</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Memory persistence curve resisting Ebbinghaus decay</p>
+            </div>
+            <span class="text-xs font-bold text-emerald-500 font-mono">+33% Retention Delta</span>
+          </div>
+          <div class="h-56 sm:h-64 relative">
+            <canvas id="analytics-retention-chart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 3. INTERACTIVE FEATURE DEMO D: SPACED REPETITION FLASHCARDS               -->
+  <!-- ========================================================================= -->
+  <section id="flashcards" class="py-20 bg-slate-100/60 dark:bg-slate-900/40 border-y border-slate-200/80 dark:border-slate-800/80 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/80 px-3 py-1 rounded-full border border-primary-200 dark:border-primary-900">
+          Interactive Demo 4
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 tracking-tight">
+          Smart Spaced Repetition Flashcards
+        </h2>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mt-2">
+          Harness the Leitner spaced review system. Click or press <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">Space</kbd> to flip the card, then rate your recall confidence.
+        </p>
+      </div>
+
+      <div class="max-w-xl mx-auto">
+        
+        <!-- Deck Stats & Progress -->
+        <div class="flex items-center justify-between mb-4 text-xs font-semibold text-slate-600 dark:text-slate-400">
+          <div>Card <span id="fc-current-index">1</span> of <span id="fc-total-count">5</span></div>
+          <div id="fc-state-badge"></div>
+          <div>Mastered: <span id="fc-mastered-count" class="text-emerald-600 dark:text-emerald-400 font-bold">0</span></div>
+        </div>
+
+        <div class="w-full bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden mb-6">
+          <div id="fc-progress-bar" class="bg-primary-500 h-full rounded-full transition-all duration-300" style="width: 20%;"></div>
+        </div>
+
+        <!-- 3D Flipping Card Container -->
+        <div class="perspective-1000 cursor-pointer" onclick="window.spacedFlashcards.flipCard()">
+          <div id="active-flashcard-inner" class="flashcard-inner relative">
+            
+            <!-- Card Front (Question) -->
+            <div class="flashcard-front p-8 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 shadow-xl hover:border-primary-400 transition-colors">
+              <div class="flex items-center justify-between">
+                <span id="fc-front-category" class="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">
+                  Concept Prompt
+                </span>
+                <span class="text-xs text-slate-400">Click to Flip 🔄</span>
+              </div>
+
+              <div class="my-auto py-6">
+                <h3 id="fc-front-text" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-snug">
+                  Loading flashcard prompt...
+                </h3>
+              </div>
+
+              <div class="text-xs text-slate-400 font-medium">
+                Tap card or press <kbd class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono">Space</kbd> to reveal answer
+              </div>
+            </div>
+
+            <!-- Card Back (Answer & Leitner Explanation) -->
+            <div class="flashcard-back p-8 bg-gradient-to-br from-slate-900 to-indigo-950 text-white border-2 border-primary-500 shadow-2xl">
+              <div class="flex items-center justify-between text-xs">
+                <span id="fc-back-category" class="font-bold uppercase tracking-wider text-cyan-400">
+                  Concept Synthesis
+                </span>
+                <span class="text-slate-300">Click to Flip 🔄</span>
+              </div>
+
+              <div class="my-auto py-4">
+                <p id="fc-back-text" class="text-base sm:text-lg text-slate-100 leading-relaxed">
+                  Loading answer explanation...
+                </p>
+              </div>
+
+              <div class="text-[11px] text-slate-300 font-medium">
+                Rate your confidence below to schedule next review interval
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Flip Prompt / Leitner Grading Buttons -->
+        <div class="mt-6">
+          <div id="flashcard-flip-prompt" class="text-center">
+            <button 
+              onclick="window.spacedFlashcards.flipCard()"
+              class="px-6 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-sm shadow-sm hover:shadow transition-all"
+            >
+              🔄 Reveal Concept (Flip Card)
+            </button>
+          </div>
+
+          <div id="flashcard-grading-controls" class="hidden">
+            <div class="text-center text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2.5">
+              How accurately did you recall this?
+            </div>
+            <div class="grid grid-cols-4 gap-2">
+              <button 
+                onclick="window.spacedFlashcards.gradeCard('again')" 
+                class="p-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:hover:bg-rose-900/80 dark:text-rose-300 border border-rose-200 dark:border-rose-900 font-bold text-xs transition-all flex flex-col items-center"
+              >
+                <span>Again</span>
+                <span class="text-[10px] opacity-75 font-normal">(&lt; 10m)</span>
+              </button>
+
+              <button 
+                onclick="window.spacedFlashcards.gradeCard('hard')" 
+                class="p-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:hover:bg-amber-900/80 dark:text-amber-300 border border-amber-200 dark:border-amber-900 font-bold text-xs transition-all flex flex-col items-center"
+              >
+                <span>Hard</span>
+                <span class="text-[10px] opacity-75 font-normal">(2 Days)</span>
+              </button>
+
+              <button 
+                onclick="window.spacedFlashcards.gradeCard('good')" 
+                class="p-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:hover:bg-blue-900/80 dark:text-blue-300 border border-blue-200 dark:border-blue-900 font-bold text-xs transition-all flex flex-col items-center"
+              >
+                <span>Good</span>
+                <span class="text-[10px] opacity-75 font-normal">(4 Days)</span>
+              </button>
+
+              <button 
+                onclick="window.spacedFlashcards.gradeCard('easy')" 
+                class="p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/80 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900 font-bold text-xs transition-all flex flex-col items-center"
+              >
+                <span>Easy ⭐</span>
+                <span class="text-[10px] opacity-75 font-normal">(7+ Days)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation buttons -->
+        <div class="flex items-center justify-between mt-6 text-xs">
+          <button 
+            onclick="window.spacedFlashcards.prevCard()"
+            class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            ← Previous
+          </button>
+          <button 
+            onclick="window.spacedFlashcards.resetDeck()" 
+            class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+          >
+            Reset Deck Mastery
+          </button>
+          <button 
+            onclick="window.spacedFlashcards.nextCard()"
+            class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            Next →
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 3. INTERACTIVE FEATURE DEMO E: COLLABORATIVE NOTE-SHARING / COMMUNITY     -->
+  <!-- ========================================================================= -->
+  <section id="community" class="py-20 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/80 px-3 py-1 rounded-full border border-primary-200 dark:border-primary-900">
+          Interactive Demo 5
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 tracking-tight">
+          Peer Knowledge & Discussion Hub
+        </h2>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mt-2">
+          Demonstrates social learning and collaborative wisdom. Share study hacks, upvote verified tips, and learn with peers.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Post New Note Form -->
+        <div class="lg:col-span-5 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm h-fit">
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+            <span>✍️</span> Contribute a Study Note
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-5">
+            Share a mnemonic, algorithmic trick, or study technique with other students.
+          </p>
+
+          <form id="new-note-form" class="space-y-4">
+            <div>
+              <label for="note-title-input" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">
+                Insight Title
+              </label>
+              <input 
+                type="text" 
+                id="note-title-input" 
+                placeholder="e.g., Quick mnemonic for Graph Traversals"
+                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:border-primary-500"
+                required
+              />
+            </div>
+
+            <div>
+              <label for="note-tag-select" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">
+                Topic Tag
+              </label>
+              <select id="note-tag-select" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:border-primary-500">
+                <option value="Algorithms">#Algorithms</option>
+                <option value="StudyHacks">#StudyHacks</option>
+                <option value="EdTechTheory">#EdTechTheory</option>
+                <option value="WebDev">#WebDev</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="note-content-input" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">
+                Content & Tip
+              </label>
+              <textarea 
+                id="note-content-input" 
+                rows="4" 
+                placeholder="Write your explanation or shortcut here..."
+                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:border-primary-500"
+                required
+              ></textarea>
+            </div>
+
+            <button 
+              type="submit" 
+              class="w-full py-3 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-bold text-sm shadow transition-all flex items-center justify-center gap-2"
+            >
+              <span>Publish to Community Board</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Notes Feed -->
+        <div class="lg:col-span-7 space-y-4" id="discussion-notes-container">
+          <!-- Dynamically populated by app.js -->
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 4. TECHNOLOGY BEHIND IT                                                   -->
+  <!-- ========================================================================= -->
+  <section id="technology" class="py-20 bg-slate-100/60 dark:bg-slate-900/40 border-y border-slate-200/80 dark:border-slate-800/80 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/80 px-3 py-1 rounded-full border border-primary-200 dark:border-primary-900">
+          Architecture & Engineering
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 tracking-tight">
+          The Technology Powering Smart Education
+        </h2>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mt-2">
+          Click an engine layer below to explore how algorithms, distributed cloud services, and psychometrics work together.
+        </p>
+      </div>
+
+      <!-- Architecture Interactive Switcher -->
+      <div class="max-w-4xl mx-auto">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+          <button 
+            onclick="selectTechTab('ai')" 
+            data-tech="ai" 
+            class="tech-tab-btn px-4 py-3 rounded-xl font-bold text-sm bg-primary-600 text-white shadow-md transition-all flex items-center gap-2"
+          >
+            <span>🤖</span>
+            <span>Adaptive AI</span>
+          </button>
+
+          <button 
+            onclick="selectTechTab('cloud')" 
+            data-tech="cloud" 
+            class="tech-tab-btn px-4 py-3 rounded-xl font-medium text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center gap-2"
+          >
+            <span>☁️</span>
+            <span>Cloud & Edge</span>
+          </button>
+
+          <button 
+            onclick="selectTechTab('analytics')" 
+            data-tech="analytics" 
+            class="tech-tab-btn px-4 py-3 rounded-xl font-medium text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center gap-2"
+          >
+            <span>📊</span>
+            <span>Data Analytics</span>
+          </button>
+
+          <button 
+            onclick="selectTechTab('ux')" 
+            data-tech="ux" 
+            class="tech-tab-btn px-4 py-3 rounded-xl font-medium text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center gap-2"
+          >
+            <span>♿</span>
+            <span>Cognitive UX</span>
+          </button>
+        </div>
+
+        <!-- Tech Details Container -->
+        <div id="tech-detail-box">
+          <!-- Dynamically populated by app.js -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 5. BENEFITS / IMPACT: TRADITIONAL VS. SMART LEARNING                      -->
+  <!-- ========================================================================= -->
+  <section id="comparison" class="py-20 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/80 px-3 py-1 rounded-full border border-primary-200 dark:border-primary-900">
+          Transformational Impact
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 tracking-tight">
+          Traditional Learning vs. Smart Education
+        </h2>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mt-2">
+          A side-by-side comparison of how digital adaptation replaces rigid educational friction with personalized mastery.
+        </p>
+      </div>
+
+      <!-- Comparison Matrix Table -->
+      <div class="max-w-5xl mx-auto bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60">
+                <th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Dimension</th>
+                <th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">Traditional Education</th>
+                <th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400 bg-primary-50/50 dark:bg-primary-950/30">ByteBlaze</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+              
+              <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
+                <td class="py-4 px-6 font-bold text-slate-900 dark:text-white">Pacing</td>
+                <td class="py-4 px-6 text-slate-600 dark:text-slate-400">
+                  <span class="inline-block text-rose-500 mr-1.5">✕</span> Fixed lock-step syllabus. Fast students get bored; struggling students get left behind.
+                </td>
+                <td class="py-4 px-6 text-slate-800 dark:text-slate-200 font-medium bg-primary-50/30 dark:bg-primary-950/20">
+                  <span class="inline-block text-emerald-500 mr-1.5">✓</span> <strong>Dynamic self-pacing:</strong> Difficulty adapts continuously to student's exact ability level.
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
+                <td class="py-4 px-6 font-bold text-slate-900 dark:text-white">Feedback Loop</td>
+                <td class="py-4 px-6 text-slate-600 dark:text-slate-400">
+                  <span class="inline-block text-rose-500 mr-1.5">✕</span> Delayed weeks after exams. Misconceptions have already solidified into neural memory.
+                </td>
+                <td class="py-4 px-6 text-slate-800 dark:text-slate-200 font-medium bg-primary-50/30 dark:bg-primary-950/20">
+                  <span class="inline-block text-emerald-500 mr-1.5">✓</span> <strong>Immediate remedial feedback:</strong> Clear explanations provided the instant an error occurs.
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
+                <td class="py-4 px-6 font-bold text-slate-900 dark:text-white">Retention Method</td>
+                <td class="py-4 px-6 text-slate-600 dark:text-slate-400">
+                  <span class="inline-block text-rose-500 mr-1.5">✕</span> Massed practice & cramming before finals, resulting in 80% memory loss in 30 days.
+                </td>
+                <td class="py-4 px-6 text-slate-800 dark:text-slate-200 font-medium bg-primary-50/30 dark:bg-primary-950/20">
+                  <span class="inline-block text-emerald-500 mr-1.5">✓</span> <strong>Spaced repetition:</strong> Scheduled recall intervals mathematically timed to prevent memory decay.
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
+                <td class="py-4 px-6 font-bold text-slate-900 dark:text-white">Schedule Flexibility</td>
+                <td class="py-4 px-6 text-slate-600 dark:text-slate-400">
+                  <span class="inline-block text-rose-500 mr-1.5">✕</span> Rigid, physical attendance requirements that conflict with modern student schedules.
+                </td>
+                <td class="py-4 px-6 text-slate-800 dark:text-slate-200 font-medium bg-primary-50/30 dark:bg-primary-950/20">
+                  <span class="inline-block text-emerald-500 mr-1.5">✓</span> <strong>Asynchronous micro-sessions:</strong> Study from anywhere, anytime, across phone, tablet, and PC.
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
+                <td class="py-4 px-6 font-bold text-slate-900 dark:text-white">Mental Well-being</td>
+                <td class="py-4 px-6 text-slate-600 dark:text-slate-400">
+                  <span class="inline-block text-rose-500 mr-1.5">✕</span> High anxiety, guilt over missed hours, and excessive cognitive fatigue.
+                </td>
+                <td class="py-4 px-6 text-slate-800 dark:text-slate-200 font-medium bg-primary-50/30 dark:bg-primary-950/20">
+                  <span class="inline-block text-emerald-500 mr-1.5">✓</span> <strong>Comfort-first design:</strong> "No-guilt" schedule rebalancing, dark mode, and integrated rest intervals.
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 6. CALL-TO-ACTION                                                         -->
+  <!-- ========================================================================= -->
+  <section class="py-20 bg-gradient-to-br from-primary-900 via-indigo-900 to-slate-950 text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-600/20 via-transparent to-transparent"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+      <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-white/10 text-cyan-300 border border-white/20">
+        Empower Your Learning Journey
+      </span>
+
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold mt-5 mb-4 tracking-tight">
+        Experience the Future of Learning Today.
+      </h2>
+
+      <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+        Whether you want to test your knowledge with the adaptive quiz engine or craft a personalized study plan, ByteBlaze gives you the tools to succeed effortlessly.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a 
+          href="#quiz" 
+          class="px-8 py-3.5 rounded-2xl bg-white text-slate-950 font-extrabold text-base hover:bg-slate-100 shadow-xl transition-all flex items-center gap-2 group"
+        >
+          <span>Try Adaptive Quiz Demo</span>
+          <svg class="w-5 h-5 text-primary-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+
+        <a 
+          href="#planner" 
+          class="px-8 py-3.5 rounded-2xl bg-primary-600/40 hover:bg-primary-600/60 border border-primary-400/40 text-white font-extrabold text-base transition-all"
+        >
+          Generate Study Plan
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER                                                                    -->
+  <!-- ========================================================================= -->
+  <footer class="py-12 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+        <div>
+          <div class="flex items-center justify-center md:justify-start gap-2">
+            <span class="text-xl">⚡</span>
+            <span class="font-extrabold text-lg text-slate-900 dark:text-white">ByteBlaze</span>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-primary-100 text-primary-800 dark:bg-primary-950 dark:text-primary-300">v1.0 Demo</span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Student Innovation Project — Exploring Effectiveness, Efficiency, Flexibility, and Comfort in Digital Learning.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-6 text-xs text-slate-500 dark:text-slate-400 font-medium">
+          <a href="#pillars" class="hover:text-primary-600 dark:hover:text-primary-400">Four Pillars</a>
+          <a href="#quiz" class="hover:text-primary-600 dark:hover:text-primary-400">Adaptive Testing</a>
+          <a href="#planner" class="hover:text-primary-600 dark:hover:text-primary-400">Study Scheduler</a>
+          <a href="#technology" class="hover:text-primary-600 dark:hover:text-primary-400">Architecture</a>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-400">
+        Created for the Student Innovation Showcase • Designed with accessible modern web standards & client-side telemetry.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/quiz-engine.js"></script>
+  <script src="js/planner-engine.js"></script>
+  <script src="js/flashcard-engine.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
